@@ -38,7 +38,7 @@ class DotableList(list):
             return v
 
 
-def parse(root):
+class Dotable(object):
     """Parse a dictionary or list into the equivalent dot notation.
 
     Args:
@@ -47,9 +47,11 @@ def parse(root):
     Returns:
         The dotable representation.
     """
-    if isinstance(root, dict):
-        return DotableDict(root)
-    elif isinstance(root, list):
-        return DotableList(root)
-    else:
-        raise ValueError
+
+    def __new__(cls, root):
+        if isinstance(root, dict):
+            return DotableDict(root)
+        elif isinstance(root, list):
+            return DotableList(root)
+        else:
+            raise ValueError('The root item must be a list or dict')

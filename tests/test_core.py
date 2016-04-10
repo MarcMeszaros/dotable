@@ -2,7 +2,7 @@
 from __future__ import absolute_import
 import unittest
 
-from dotable import DotableDict, DotableList, parse
+from dotable import DotableDict, DotableList, Dotable
 
 
 class TestCore(unittest.TestCase):
@@ -58,15 +58,17 @@ class TestCore(unittest.TestCase):
         self.assertEqual(l[1].nested_dict.int1, 1)
         self.assertEqual(l[0][0].nested_list[2], 3)
 
-    def test_parse(self):
-        item_d = parse(self.dictionary)
-        self.assertEqual(item_d.first_key.nested_dict.val1, 'val1')
-
-        item_l = parse(self.list)
-
-        self.assertEqual(item_l[1].nested_dict.int1, 1)
-        self.assertEqual(item_l[0][0].nested_list[2], 3)
-
-    def test_parse_invalid(self):
+    def test_dotable_invalid(self):
         with self.assertRaises(ValueError):
-            item_invalid = parse(5)
+            item_invalid = Dotable(5)
+
+    def test_dotable_list(self):
+        l = Dotable(self.list)
+
+        self.assertEqual(l[1].nested_dict.int1, 1)
+        self.assertEqual(l[0][0].nested_list[2], 3)
+
+    def test_dotable_dict(self):
+        d = Dotable(self.dictionary)
+
+        self.assertEqual(d.first_key.nested_dict.val1, 'val1')
