@@ -4,6 +4,11 @@ import unittest
 
 from dotable import DotableDict, DotableList, Dotable
 
+class ExtendedDotable(Dotable):
+
+    def __init__(self, myint, data=dict(), **kwargs):
+        super(ExtendedDotable, self).__init__(data)
+
 
 class TestCore(unittest.TestCase):
 
@@ -70,5 +75,10 @@ class TestCore(unittest.TestCase):
 
     def test_dotable_dict(self):
         d = Dotable(self.dictionary)
+
+        self.assertEqual(d.first_key.nested_dict.val1, 'val1')
+
+    def test_extending(self):
+        d = ExtendedDotable(5, self.dictionary)
 
         self.assertEqual(d.first_key.nested_dict.val1, 'val1')

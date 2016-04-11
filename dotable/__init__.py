@@ -41,17 +41,16 @@ class DotableList(list):
 class Dotable(object):
     """Parse a dictionary or list into the equivalent dot notation.
 
-    Args:
-        root (dict|list): The root item
+    It will parse the first dict or list item in the arguments. A list or dict
+    must be present somewhere in the args list.
 
     Returns:
-        The dotable representation.
+        The dotable representation of the first compatible arg in the list.
     """
-
-    def __new__(cls, root):
-        if isinstance(root, dict):
-            return DotableDict(root)
-        elif isinstance(root, list):
-            return DotableList(root)
-        else:
-            raise ValueError('The root item must be a list or dict')
+    def __new__(cls, *args, **kwargs):
+        for arg in args:
+            if isinstance(arg, dict):
+                return DotableDict(arg)
+            elif isinstance(arg, list):
+                return DotableList(arg)
+        raise ValueError('One of the arguments must be a list or dict')
