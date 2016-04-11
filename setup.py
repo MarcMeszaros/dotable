@@ -31,7 +31,7 @@ except IOError:
 
 setup(
     name='dotable',
-    version='0.1.0',
+    version='0.1.1',
     packages=['dotable'],
     description='A module for accessing nested lists and dictionaries using json style dot notation.',
     long_description=long_description,
